@@ -24,15 +24,11 @@ export default function ProjectCard({ project }: { project: Project }) {
       href={`/projects/${project.slug}`}
       className="group flex flex-col rounded-[20px] border border-line bg-surface p-[22px] transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-card"
     >
-      <div className="mb-4 flex items-center justify-between">
-        <span className="font-mono text-[11px] uppercase tracking-[0.09em] text-ink-soft">
-          {project.category}
-        </span>
-        <VisibilityTag visibility={project.visibility} />
-      </div>
-
       {/* Thumbnail placeholder — swap for a real <Image> when available. */}
-      <div className="mb-[18px] grid h-[158px] place-items-center rounded-[13px] border border-line bg-gradient-to-br from-[#f6f1ea] to-[#efe9df] font-mono text-[11.5px] text-[#a59e8e]">
+      <div className="relative mb-[18px] grid h-[158px] place-items-center rounded-[13px] border border-line bg-gradient-to-br from-[#f6f1ea] to-[#efe9df] font-mono text-[11.5px] text-[#a59e8e]">
+        <span className="absolute right-3 top-3">
+          <VisibilityTag visibility={project.visibility} />
+        </span>
         project preview
       </div>
 
