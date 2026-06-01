@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { site } from "@/data/site";
 import Reveal from "./Reveal";
 import SectionTag from "./SectionTag";
+import { playConfettiSound } from "@/utils/sounds";
 
 // ---------------------------------------------------------------------------
 // Confetti canvas
@@ -116,6 +117,7 @@ function FunWidget() {
   }, [noPos]);
 
   const handleYes = () => {
+    playConfettiSound();
     setDone(true);
     setConfetti(true);
     setToast(true);

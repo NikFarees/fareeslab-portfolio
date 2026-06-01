@@ -18,7 +18,7 @@ function PenguinWidget() {
           style={{ fontFamily: "var(--font-fraunces)", fontStyle: "italic", fontSize: "18px", fill: "rgba(42,35,28,0.85)" }}
         >
           <textPath href="#arch" textAnchor="middle" startOffset="50%">
-            try click me
+            try clicking me
           </textPath>
         </text>
       </svg>

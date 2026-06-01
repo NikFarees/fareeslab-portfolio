@@ -46,3 +46,12 @@ export function playQuack() {
     audio.play();
   } catch {}
 }
+
+export function playConfettiSound() {
+  try {
+    const audio = new Audio("/sound/confetti-pop.mp3");
+    audio.volume = 0.9;
+    audio.currentTime = 0;
+    audio.play();
+  } catch {}
+}
