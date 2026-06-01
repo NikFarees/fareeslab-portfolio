@@ -87,12 +87,15 @@ function Toast({ visible }: { visible: boolean }) {
 // ---------------------------------------------------------------------------
 function FunWidget() {
   const [noPos, setNoPos] = useState<{ x: number; y: number } | null>(null);
+  const [noClicks, setNoClicks] = useState(0);
   const [confetti, setConfetti] = useState(false);
   const [toast, setToast] = useState(false);
   const [toastVisible, setToastVisible] = useState(false);
   const [done, setDone] = useState(false);
   const arenaRef = useRef<HTMLDivElement>(null);
   const noRef = useRef<HTMLButtonElement>(null);
+
+  const noGone = noClicks >= 7;
 
   const escape = useCallback(() => {
     const arena = arenaRef.current;
@@ -102,7 +105,6 @@ function FunWidget() {
     const ah = arena.offsetHeight;
     const bw = btn.offsetWidth || 80;
     const bh = btn.offsetHeight || 36;
-    // pick a position far from current
     const cur = noPos ?? { x: aw - bw - 16, y: ah - bh - 16 };
     let nx: number, ny: number;
     do {
@@ -110,6 +112,7 @@ function FunWidget() {
       ny = Math.random() * (ah - bh);
     } while (Math.abs(nx - cur.x) < 40 && Math.abs(ny - cur.y) < 40);
     setNoPos({ x: nx, y: ny });
+    setNoClicks((c) => c + 1);
   }, [noPos]);
 
   const handleYes = () => {
@@ -126,46 +129,52 @@ function FunWidget() {
       <>
         {confetti && <Confetti onDone={() => setConfetti(false)} />}
         {toast && <Toast visible={toastVisible} />}
-        <div className="flex w-[260px] flex-col items-center rounded-[18px] border border-line bg-surface px-5 py-7 text-center shadow-card">
-          <p className="mt-3 text-[15px] font-semibold">You&rsquo;re awesome!</p>
-          <p className="mt-1 text-[13px] text-ink-soft">Thanks for stopping by.</p>
+        <div className="flex w-[340px] flex-col items-center rounded-[18px] border border-line bg-surface px-8 py-10 text-center shadow-card">
+          <p className="mt-3 text-[20px] font-semibold">I knew you&rsquo;d click yes.</p>
+          <p className="mt-2 text-[15px] text-ink-soft">Thank you for visiting — it genuinely means a lot. Hope it left a good impression!</p>
         </div>
       </>
     );
   }
 
   return (
-    <div className="w-[260px] overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+    <div className="w-[340px] overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
       {/* Header */}
-      <div className="px-5 pt-5 pb-4">
-        <p className="text-[15px] font-semibold tracking-[-0.01em]">Do you like my website?</p>
-        <p className="mt-1 text-[12.5px] text-ink-soft">Be honest.</p>
+      <div className="px-6 pt-6 pb-5">
+        <p className="text-[18px] font-semibold tracking-[-0.01em]">Do you like my website?</p>
+        <p className="mt-1 text-[14px] text-ink-soft">Be honest.</p>
       </div>
 
       {/* Arena — No button runs around in here */}
-      <div ref={arenaRef} className="relative h-[130px] border-t border-line">
-        {/* Yes — stays put */}
+      <div ref={arenaRef} className="relative h-[150px] border-t border-line">
+        {/* Yes — centered when No is gone, otherwise bottom-left */}
         <button
           onClick={handleYes}
-          className="absolute bottom-5 left-5 rounded-[10px] bg-accent px-4 py-2 text-[13.5px] font-medium text-white transition-colors hover:bg-accent-dark"
+          className={`rounded-[10px] bg-accent text-white font-medium transition-all hover:bg-accent-dark ${
+            noGone
+              ? "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-10 py-4 text-[18px]"
+              : "absolute bottom-5 left-5 px-5 py-2.5 text-[15px]"
+          }`}
         >
           Yes
         </button>
 
-        {/* No — runs away */}
-        <button
-          ref={noRef}
-          onMouseEnter={escape}
-          onClick={escape}
-          style={
-            noPos
-              ? { position: "absolute", left: noPos.x, top: noPos.y, transition: "left 0.12s ease, top 0.12s ease" }
-              : { position: "absolute", bottom: 20, right: 16 }
-          }
-          className="rounded-[10px] border border-line-strong bg-surface px-4 py-2 text-[13.5px] font-medium text-ink"
-        >
-          No
-        </button>
+        {/* No — runs away, disappears after 7 escapes */}
+        {!noGone && (
+          <button
+            ref={noRef}
+            onMouseEnter={escape}
+            onClick={escape}
+            style={
+              noPos
+                ? { position: "absolute", left: noPos.x, top: noPos.y, transition: "left 0.12s ease, top 0.12s ease" }
+                : { position: "absolute", bottom: 20, right: 16 }
+            }
+            className="rounded-[10px] border border-line-strong bg-surface px-5 py-2.5 text-[15px] font-medium text-ink"
+          >
+            No
+          </button>
+        )}
       </div>
     </div>
   );
