@@ -4,7 +4,7 @@ import { useState } from "react";
 import { projectsByCategory, type ProjectCategory } from "@/data/projects";
 import Reveal from "./Reveal";
 import SectionTag from "./SectionTag";
-import ProjectCard, { GhostCard } from "./ProjectCard";
+import ProjectCard from "./ProjectCard";
 
 const TABS: ProjectCategory[] = ["Client Project", "Personal Project"];
 const TAB_LABEL: Record<ProjectCategory, string> = {
@@ -12,8 +12,8 @@ const TAB_LABEL: Record<ProjectCategory, string> = {
   "Personal Project": "Personal Projects",
 };
 
-const DESKTOP_PER_PAGE = 6; // 3 cols × 2 rows
-const MOBILE_PER_PAGE = 2; // 1 col × 2 rows
+const DESKTOP_PER_PAGE = 3; // 3 cols × 1 row
+const MOBILE_PER_PAGE = 1; // 1 col × 1 row
 
 export default function Projects() {
   const [active, setActive] = useState<ProjectCategory>("Client Project");
@@ -31,9 +31,6 @@ export default function Projects() {
 
   const desktopItems = items.slice((desktopPage - 1) * DESKTOP_PER_PAGE, desktopPage * DESKTOP_PER_PAGE);
   const mobileItems = items.slice((mobilePage - 1) * MOBILE_PER_PAGE, mobilePage * MOBILE_PER_PAGE);
-
-  const isLastDesktopPage = desktopPage === totalDesktopPages || totalDesktopPages === 0;
-  const isLastMobilePage = mobilePage === totalMobilePages || totalMobilePages === 0;
 
   const switchTab = (tab: ProjectCategory) => {
     setActive(tab);
@@ -82,7 +79,6 @@ export default function Projects() {
           {desktopItems.map((p) => (
             <ProjectCard key={p.slug} project={p} />
           ))}
-          {isLastDesktopPage && <GhostCard />}
         </Reveal>
 
         {/* Mobile grid */}
@@ -90,7 +86,6 @@ export default function Projects() {
           {mobileItems.map((p) => (
             <ProjectCard key={p.slug} project={p} />
           ))}
-          {isLastMobilePage && <GhostCard />}
         </Reveal>
 
         {/* Mobile pagination — stays at the bottom */}
