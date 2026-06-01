@@ -3,85 +3,92 @@
 import { useEffect, useRef, useState, KeyboardEvent } from "react";
 import { playKeyClick } from "@/utils/sounds";
 import { site } from "@/data/site";
+import { projects } from "@/data/projects";
 
 // ---------------------------------------------------------------------------
 // Fake filesystem
 // ---------------------------------------------------------------------------
 type FSNode = { type: "file"; content: string } | { type: "dir"; children: Record<string, FSNode> };
 
-const FS: Record<string, FSNode> = {
-  "about.txt": {
-    type: "file",
-    content: `Name    : Nik Farees
-Role    : Software Developer
+function uniq(values: string[]) {
+  return [...new Set(values)];
+}
+
+function makeFs(): Record<string, FSNode> {
+  const skills = uniq([
+    ...site.badges,
+    ...projects.flatMap((project) => project.stack),
+  ]);
+
+  const projectDirs: Record<string, FSNode> = {};
+  for (const project of projects) {
+    const links = [
+      project.links?.github ? `GitHub : ${project.links.github}` : "",
+      project.links?.live ? `Live   : ${project.links.live}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    projectDirs[project.slug] = {
+      type: "dir",
+      children: {
+        "README.md": {
+          type: "file",
+          content: `# ${project.title}
+Category  : ${project.category}
+Role      : ${project.role}
+Visibility: ${project.visibility}
+Stack     : ${project.stack.join(" · ")}
+
+${project.description}${links ? `\n\n${links}` : ""}`,
+        },
+      },
+    };
+  }
+
+  return {
+    "about.txt": {
+      type: "file",
+      content: `Name    : ${site.name}
+Role    : ${site.role}
 Base    : Kuala Lumpur, Malaysia
-Focus   : Laravel · Filament · Docker · Next.js
-Bio     : Backend-leaning engineer who ships maintainable,
-          production-ready software.`,
-  },
-  "skills.txt": {
-    type: "file",
-    content: `Languages : PHP, Python, Java, C#
-Backend   : Laravel, Filament, REST APIs, ASP.NET MVC
-DevOps    : Docker, GitHub Actions, Git, Linux, Cloudflare
-Databases : MySQL, SQLite
-Frontend  : Next.js, TypeScript, Tailwind CSS`,
-  },
-  "contact.txt": {
-    type: "file",
-    content: `Email    : nfarees.faizal@gmail.com
-GitHub   : github.com/NikFarees
-LinkedIn : linkedin.com/in/nikfarees
-Phone    : +60 11-7511 2905`,
-  },
-  projects: {
-    type: "dir",
-    children: {
-      "auction-system": {
-        type: "dir",
-        children: {
-          "README.md": {
-            type: "file",
-            content: `# Malaysia's Largest Online Auction System
-Stack  : Laravel · MySQL · WebSockets
-Users  : 100+ concurrent bidders
-Status : Production · Private`,
-          },
-        },
-      },
-      "sumbangan": {
-        type: "dir",
-        children: {
-          "README.md": {
-            type: "file",
-            content: `# School Donation Management System
-Stack  : Laravel · Filament · Docker · GitHub Actions
-CI/CD  : Staging + production pipelines from scratch
-Status : Production`,
-          },
+Website : ${site.url}
+Bio     : ${site.aboutLead}`,
+    },
+    "skills.txt": {
+      type: "file",
+      content: `Core stack:
+${skills.map((skill) => `- ${skill}`).join("\n")}`,
+    },
+    "contact.txt": {
+      type: "file",
+      content: `Email    : ${site.contact.email}
+GitHub   : ${site.contact.githubLabel}
+LinkedIn : ${site.contact.linkedinLabel}
+Phone    : ${site.contact.phoneLabel}`,
+    },
+    projects: {
+      type: "dir",
+      children: projectDirs,
+    },
+    experience: {
+      type: "dir",
+      children: {
+        "career.txt": {
+          type: "file",
+          content: site.experience
+            .map(
+              (item) =>
+                `[${item.period}] ${item.title} @ ${item.company}\n  - ${item.detail}`
+            )
+            .join("\n\n"),
         },
       },
     },
-  },
-  experience: {
-    type: "dir",
-    children: {
-      "career.txt": {
-        type: "file",
-        content: `[Mar 2026 – Present]  Software Developer @ Latitude Innovation
-  - 6+ production systems shipped
-  - CI/CD pipelines across 3+ repos (GitHub Actions)
+  };
+}
 
-[Sep 2025 – Feb 2026] Web Developer Intern @ Latitude Innovation
-  - Real-time auction backend · 100+ concurrent users
-  - DNS, SMTP setup for 10+ client sites
-
-[Oct 2023 – Mar 2024] Lecturer Assistant @ UniKL MIIT
-  - Supported 50+ students in weekly labs & lectures`,
-      },
-    },
-  },
-};
+const FS = makeFs();
 
 // ---------------------------------------------------------------------------
 // Command resolver
@@ -155,12 +162,24 @@ function runCommand(cmd: string, cwd: string[]): { output: string; nextCwd?: str
   return { output: `zsh: command not found: ${prog}` };
 }
 
+function lcp(values: string[]) {
+  if (values.length === 0) return "";
+  let prefix = values[0];
+  for (let i = 1; i < values.length; i++) {
+    while (!values[i].startsWith(prefix) && prefix.length > 0) {
+      prefix = prefix.slice(0, -1);
+    }
+  }
+  return prefix;
+}
+
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 type HistoryEntry = { prompt: string; output: string };
 
 const INTRO_LINES = site.terminalLines;
+const COMMANDS = ["ls", "cd", "pwd", "cat", "whoami", "clear", "help"] as const;
 
 export default function Terminal() {
   const [introTyped, setIntroTyped] = useState<string[]>([""]);
@@ -237,7 +256,73 @@ export default function Terminal() {
     setInput("");
   };
 
+  const pushOutput = (output: string) => {
+    if (!output) return;
+    setHistory((h) => [...h, { prompt: `${prompt} ${input}`, output }]);
+  };
+
+  const onTabComplete = () => {
+    const raw = input;
+    const trimmed = raw.trimStart();
+    if (!trimmed) return;
+
+    const parts = trimmed.split(/\s+/);
+    const prog = parts[0] ?? "";
+    const arg = parts[1] ?? "";
+    const hasArgSlot = trimmed.includes(" ");
+
+    if (!hasArgSlot) {
+      const matches = COMMANDS.filter((command) => command.startsWith(prog));
+      if (matches.length === 0) return;
+      if (matches.length === 1) {
+        setInput(`${matches[0]} `);
+        return;
+      }
+      const prefix = lcp(matches);
+      if (prefix.length > prog.length) {
+        setInput(prefix);
+      } else {
+        pushOutput(matches.join("  "));
+      }
+      return;
+    }
+
+    if (prog !== "cd" && prog !== "cat") return;
+    if (parts.length > 2) return;
+
+    const dir = resolve(cwd);
+    if (!dir) return;
+
+    const candidates = Object.entries(dir)
+      .filter(([, node]) => (prog === "cd" ? node.type === "dir" : true))
+      .map(([name, node]) =>
+        prog === "cd" ? name : node.type === "dir" ? `${name}/` : name
+      );
+
+    const matches = candidates.filter((name) => name.startsWith(arg));
+    if (matches.length === 0) return;
+    if (matches.length === 1) {
+      const selected = matches[0];
+      const shouldAddSpace = prog === "cat" || !selected.endsWith("/");
+      setInput(`${prog} ${selected}${shouldAddSpace ? " " : ""}`);
+      return;
+    }
+
+    const prefix = lcp(matches);
+    if (prefix.length > arg.length) {
+      setInput(`${prog} ${prefix}`);
+    } else {
+      pushOutput(matches.join("  "));
+    }
+  };
+
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      playKeyClick();
+      onTabComplete();
+      return;
+    }
     playKeyClick();
     if (e.key === "Enter") { submit(); return; }
     if (e.key === "ArrowUp") {
