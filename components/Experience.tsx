@@ -9,7 +9,7 @@ export default function Experience() {
         <Reveal>
           <SectionTag number="03" label="Experience" />
         </Reveal>
-        <div className="grid gap-5 sm:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-3">
           {site.experience.map((item, i) => (
             <Reveal key={item.title}>
               <div className="flex h-full flex-col rounded-[16px] border border-line bg-surface p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-card">

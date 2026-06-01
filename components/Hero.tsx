@@ -7,7 +7,7 @@ import Terminal from "./Terminal";
 export default function Hero() {
   return (
     <section id="top" className="pb-20 pt-[74px] md:pb-24">
-      <div className="wrap grid items-center gap-10 md:grid-cols-[1.25fr_0.85fr] md:gap-14">
+      <div className="wrap grid items-center gap-10 lg:grid-cols-[1.25fr_0.85fr] lg:gap-14">
         {/* Left: name + copy */}
         <Reveal>
           <span className="font-mono text-xs font-medium uppercase tracking-[0.16em] text-accent">

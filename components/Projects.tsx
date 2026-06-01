@@ -42,7 +42,7 @@ export default function Projects() {
           </div>
         </Reveal>
 
-        <Reveal key={active} className="grid gap-[22px] md:grid-cols-[1.05fr_0.95fr]">
+        <Reveal key={active} className="grid gap-[22px] lg:grid-cols-[1.05fr_0.95fr]">
           {items.map((p) => (
             <ProjectCard key={p.slug} project={p} />
           ))}

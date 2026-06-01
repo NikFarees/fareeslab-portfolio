@@ -13,24 +13,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#FAFAF7",
-        surface: "#FFFFFF",
+        paper: "#F4F0E6",
+        surface: "#FAF7F0",
         ink: {
           DEFAULT: "#1B1A18",
           soft: "#6C6962",
         },
         line: {
-          DEFAULT: "#ECE9E1",
-          strong: "#E2DED4",
+          DEFAULT: "#E5DDD0",
+          strong: "#D6CCBA",
         },
         accent: {
-          DEFAULT: "#D97757",
-          dark: "#C25C3D",
-          wash: "#FBF1EC",
+          DEFAULT: "#CC6B4D",
+          dark: "#B35A3A",
+          wash: "#F7EDE5",
         },
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-fraunces)", "Georgia", "serif"],
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
       },
       maxWidth: {
@@ -38,7 +39,7 @@ const config: Config = {
       },
       boxShadow: {
         card: "0 26px 50px -26px rgba(28,27,24,0.32)",
-        primary: "0 6px 18px -6px rgba(217,119,87,0.6)",
+        primary: "0 6px 18px -6px rgba(204,107,77,0.6)",
         term: "0 24px 60px -22px rgba(28,27,24,0.5)",
       },
     },

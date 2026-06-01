@@ -9,7 +9,7 @@ export default function About() {
         <Reveal>
           <SectionTag number="01" label="About" />
         </Reveal>
-        <div className="grid items-start gap-8 md:grid-cols-[0.85fr_1.15fr] md:gap-12">
+        <div className="grid items-start gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
           <Reveal>
             <h2 className="text-[27px] font-medium leading-[1.18] tracking-[-0.02em]">
               {site.aboutLead}

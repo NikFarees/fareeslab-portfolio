@@ -32,7 +32,7 @@ export default function Navbar() {
           {site.name}
         </Link>
 
-        <div className="ml-auto hidden items-center gap-8 md:flex">
+        <div className="ml-auto hidden items-center gap-8 lg:flex">
           {navLinks.map((l) => (
             <Link
               key={l.href}
@@ -46,7 +46,7 @@ export default function Navbar() {
 
         <Link
           href="/#contact"
-          className="ml-auto rounded-[10px] bg-accent px-[15px] py-2 text-[13.5px] font-medium text-white shadow-primary transition-colors hover:bg-accent-dark md:ml-8"
+          className="ml-auto rounded-[10px] bg-accent px-[15px] py-2 text-[13.5px] font-medium text-white shadow-primary transition-colors hover:bg-accent-dark lg:ml-8"
         >
           Contact
         </Link>

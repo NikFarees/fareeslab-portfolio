@@ -13,7 +13,7 @@
 
   body {
     @apply bg-paper text-ink antialiased;
-    font-feature-settings: "ss01", "cv01";
+    font-feature-settings: "kern", "liga";
   }
 
   /* Offset anchored sections so the sticky nav doesn't cover headings. */
