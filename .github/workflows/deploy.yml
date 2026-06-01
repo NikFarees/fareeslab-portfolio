@@ -1,3 +1,4 @@
+# Triggered on every push to main — builds Docker image, pushes to ghcr.io, deploys to fareeslab.dev
 name: Deploy to fareeslab.dev
 
 on:
