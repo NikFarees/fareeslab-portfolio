@@ -10,7 +10,7 @@ function VisibilityTag({ visibility }: { visibility: Project["visibility"] }) {
         isPrivate ? "bg-accent-wash text-[#a9542f]" : "bg-[#eef5ef] text-[#3c7d54]"
       }`}
     >
-      {isPrivate ? "🔒 Private" : "● Public"}
+      {isPrivate ? "Private" : "● Public"}
     </span>
   );
 }

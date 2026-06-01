@@ -65,7 +65,7 @@ export default function ProjectDetail({
                   : "bg-[#eef5ef] text-[#3c7d54]"
               }`}
             >
-              {isPrivate ? "🔒 Private" : "● Public"}
+              {isPrivate ? "Private" : "● Public"}
             </span>
           </div>
 
@@ -100,7 +100,6 @@ export default function ProjectDetail({
             </div>
           ) : (
             <div className="mt-6 flex max-w-[560px] items-center gap-2.5 rounded-[12px] border border-[#e0c4a6] bg-accent-wash px-4 py-3.5 text-[13.5px] text-[#8a5631]">
-              <span>🔒</span>
               {isPrivate
                 ? "This is a private client project — source code and live link are not publicly available."
                 : "Links for this project will be added soon."}
