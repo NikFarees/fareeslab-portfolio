@@ -96,9 +96,17 @@ function FunWidget() {
   const arenaRef = useRef<HTMLDivElement>(null);
   const noRef = useRef<HTMLButtonElement>(null);
 
-  const noGone = noClicks >= 7;
+  const noGone = noClicks >= 3;
+  const promptByNoClicks = [
+    "Do you like my website?",
+    "You sure you want to say no?",
+    "Are you really really sure you dont like my website?",
+    "How about i help you.",
+  ] as const;
+  const promptTitle = promptByNoClicks[Math.min(noClicks, promptByNoClicks.length - 1)];
 
   const escape = useCallback(() => {
+    if (noGone) return;
     const arena = arenaRef.current;
     const btn = noRef.current;
     if (!arena || !btn) return;
@@ -113,8 +121,8 @@ function FunWidget() {
       ny = Math.random() * (ah - bh);
     } while (Math.abs(nx - cur.x) < 40 && Math.abs(ny - cur.y) < 40);
     setNoPos({ x: nx, y: ny });
-    setNoClicks((c) => c + 1);
-  }, [noPos]);
+    setNoClicks((c) => Math.min(3, c + 1));
+  }, [noGone, noPos]);
 
   const handleYes = () => {
     playConfettiSound();
@@ -143,7 +151,7 @@ function FunWidget() {
     <div className="w-[340px] overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
       {/* Header */}
       <div className="px-6 pt-6 pb-5">
-        <p className="text-[18px] font-semibold tracking-[-0.01em]">Do you like my website?</p>
+        <p className="text-[18px] font-semibold tracking-[-0.01em]">{promptTitle}</p>
         <p className="mt-1 text-[14px] text-ink-soft">Be honest.</p>
       </div>
 
@@ -165,7 +173,6 @@ function FunWidget() {
         {!noGone && (
           <button
             ref={noRef}
-            onMouseEnter={escape}
             onClick={escape}
             style={
               noPos
