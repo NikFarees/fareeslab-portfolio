@@ -14,23 +14,42 @@ const TAB_LABEL: Record<ProjectCategory, string> = {
 
 type Cols = 2 | 3;
 
+// Mobile = 1 col × 2 rows = 2 per page
+const MOBILE_PER_PAGE = 2;
+
 export default function Projects() {
   const [active, setActive] = useState<ProjectCategory>("Client Project");
   const [cols, setCols] = useState<Cols>(3);
-  const [expanded, setExpanded] = useState(false);
+  const [page, setPage] = useState(1);
 
   const items = projectsByCategory(active);
 
-  // Max two rows when collapsed.
-  const maxVisible = cols * 2;
-  const hasMore = items.length > maxVisible;
-  const visibleItems = expanded ? items : items.slice(0, maxVisible);
-  // Ghost "coming soon" tile only appears once every real card is shown.
-  const showGhost = !hasMore || expanded;
+  // Desktop: cols × 2 rows per page
+  const desktopPerPage = cols * 2;
+
+  const totalDesktopPages = Math.ceil(items.length / desktopPerPage);
+  const totalMobilePages = Math.ceil(items.length / MOBILE_PER_PAGE);
+
+  // Clamp page when switching tabs/cols
+  const safePage = (p: number, total: number) => Math.min(Math.max(1, p), Math.max(1, total));
+
+  const desktopPage = safePage(page, totalDesktopPages);
+  const mobilePage = safePage(page, totalMobilePages);
+
+  const desktopItems = items.slice((desktopPage - 1) * desktopPerPage, desktopPage * desktopPerPage);
+  const mobileItems = items.slice((mobilePage - 1) * MOBILE_PER_PAGE, mobilePage * MOBILE_PER_PAGE);
+
+  const isLastDesktopPage = desktopPage === totalDesktopPages || totalDesktopPages === 0;
+  const isLastMobilePage = mobilePage === totalMobilePages || totalMobilePages === 0;
 
   const switchTab = (tab: ProjectCategory) => {
     setActive(tab);
-    setExpanded(false);
+    setPage(1);
+  };
+
+  const switchCols = (c: Cols) => {
+    setCols(c);
+    setPage(1);
   };
 
   return (
@@ -60,7 +79,7 @@ export default function Projects() {
               ))}
             </div>
 
-            {/* Column toggle — hidden on mobile (always single column there) */}
+            {/* Column toggle — desktop only */}
             <div className="hidden items-center gap-2 lg:flex">
               <span className="font-mono text-[11px] uppercase tracking-[0.09em] text-ink-soft">
                 Columns
@@ -70,7 +89,7 @@ export default function Projects() {
                   <button
                     key={c}
                     type="button"
-                    onClick={() => setCols(c)}
+                    onClick={() => switchCols(c)}
                     aria-label={`${c} columns`}
                     className={`rounded-[9px] px-3.5 py-1.5 text-sm font-medium tabular-nums transition-all ${
                       cols === c
@@ -86,26 +105,96 @@ export default function Projects() {
           </div>
         </Reveal>
 
+        {/* Desktop grid */}
         <Reveal
-          key={`${active}-${cols}`}
-          className={`grid gap-[22px] ${
-            cols === 2 ? "lg:grid-cols-2" : "lg:grid-cols-3"
-          }`}
+          key={`desktop-${active}-${cols}-${desktopPage}`}
+          className={`hidden gap-[22px] lg:grid ${cols === 2 ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}
         >
-          {visibleItems.map((p) => (
+          {desktopItems.map((p) => (
             <ProjectCard key={p.slug} project={p} />
           ))}
-          {showGhost && <GhostCard />}
+          {isLastDesktopPage && <GhostCard />}
         </Reveal>
 
-        {hasMore && (
-          <div className="mt-8 flex justify-center">
+        {/* Mobile grid */}
+        <Reveal
+          key={`mobile-${active}-${mobilePage}`}
+          className="grid gap-[22px] lg:hidden"
+        >
+          {mobileItems.map((p) => (
+            <ProjectCard key={p.slug} project={p} />
+          ))}
+          {isLastMobilePage && <GhostCard />}
+        </Reveal>
+
+        {/* Desktop pagination */}
+        {totalDesktopPages > 1 && (
+          <div className="mt-8 hidden items-center justify-center gap-2 lg:flex">
             <button
               type="button"
-              onClick={() => setExpanded((v) => !v)}
-              className="rounded-[11px] border border-line-strong bg-surface px-5 py-2.5 text-[14px] font-medium text-ink transition-colors hover:border-[#d2cdc1]"
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={desktopPage === 1}
+              className="rounded-[10px] border border-line-strong bg-surface px-4 py-2 text-[13px] font-medium text-ink transition-colors hover:border-[#d2cdc1] disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {expanded ? "See less" : `See more (${items.length - maxVisible})`}
+              ← Prev
+            </button>
+            {Array.from({ length: totalDesktopPages }, (_, i) => i + 1).map((n) => (
+              <button
+                key={n}
+                type="button"
+                onClick={() => setPage(n)}
+                className={`h-9 w-9 rounded-[10px] border text-[13px] font-medium transition-colors ${
+                  desktopPage === n
+                    ? "border-accent bg-accent text-white"
+                    : "border-line-strong bg-surface text-ink hover:border-[#d2cdc1]"
+                }`}
+              >
+                {n}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setPage((p) => Math.min(totalDesktopPages, p + 1))}
+              disabled={desktopPage === totalDesktopPages}
+              className="rounded-[10px] border border-line-strong bg-surface px-4 py-2 text-[13px] font-medium text-ink transition-colors hover:border-[#d2cdc1] disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Next →
+            </button>
+          </div>
+        )}
+
+        {/* Mobile pagination */}
+        {totalMobilePages > 1 && (
+          <div className="mt-8 flex items-center justify-center gap-2 lg:hidden">
+            <button
+              type="button"
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={mobilePage === 1}
+              className="rounded-[10px] border border-line-strong bg-surface px-4 py-2 text-[13px] font-medium text-ink transition-colors hover:border-[#d2cdc1] disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              ← Prev
+            </button>
+            {Array.from({ length: totalMobilePages }, (_, i) => i + 1).map((n) => (
+              <button
+                key={n}
+                type="button"
+                onClick={() => setPage(n)}
+                className={`h-9 w-9 rounded-[10px] border text-[13px] font-medium transition-colors ${
+                  mobilePage === n
+                    ? "border-accent bg-accent text-white"
+                    : "border-line-strong bg-surface text-ink hover:border-[#d2cdc1]"
+                }`}
+              >
+                {n}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setPage((p) => Math.min(totalMobilePages, p + 1))}
+              disabled={mobilePage === totalMobilePages}
+              className="rounded-[10px] border border-line-strong bg-surface px-4 py-2 text-[13px] font-medium text-ink transition-colors hover:border-[#d2cdc1] disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Next →
             </button>
           </div>
         )}

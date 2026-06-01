@@ -116,6 +116,26 @@ export const projects: Project[] = [
     // No links — private client work.
   },
   {
+    slug: "nfe-productivity-module",
+    category: "Client Project",
+    title: "Pembangunan Modul Productivity NFE",
+    description:
+      "A web-based module management system for NFE (Non-Formal Education) programme productivity — multi-company, role-based access, with real-time collaborative editing.",
+    overview:
+      "A single-page application built for managing Non-Formal Education (NFE) programme modules and topics. Companies log in to create and maintain their own modules — filling in programme details, sector, ISCED level, hours, and structured topic content (outcomes, activities, ownership). An admin role provides a cross-company view and a full activity log. All module and topic fields auto-save on input so no manual save step is required. Real-time sync via Supabase Realtime keeps collaborators in the same module in sync.",
+    role: "Software Developer",
+    contribution: [
+      "Built the entire frontend as a single-file SPA — HTML, CSS, and vanilla JS serving a full module-management UI.",
+      "Integrated Supabase for auth (email/password), database (modules, topics, activity log), and Realtime collaborative sync.",
+      "Implemented role-based access: company users see only their own modules; admin users see all companies' data and the activity log.",
+      "Deployed on Vercel with a serverless Edge Function serving credentials at runtime to keep them out of source code.",
+      "Designed auto-save on all module and topic fields with debounce, eliminating any manual save flow.",
+    ],
+    stack: ["HTML", "CSS", "JavaScript", "Supabase", "Vercel"],
+    visibility: "Private",
+    // No links — private client work.
+  },
+  {
     slug: "pennywise",
     category: "Personal Project",
     title: "PennyWise",
