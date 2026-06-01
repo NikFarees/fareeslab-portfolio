@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink antialiased;
+    font-feature-settings: "ss01", "cv01";
+  }
+
+  /* Offset anchored sections so the sticky nav doesn't cover headings. */
+  section[id] {
+    scroll-margin-top: 84px;
+  }
+
+  ::selection {
+    @apply bg-accent/20;
+  }
+}
+
+@layer utilities {
+  /* Page width wrapper used across every section. */
+  .wrap {
+    @apply mx-auto w-full max-w-content px-7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
