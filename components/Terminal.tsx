@@ -11,7 +11,7 @@ import { projects } from "@/data/projects";
 type FSNode = { type: "file"; content: string } | { type: "dir"; children: Record<string, FSNode> };
 
 function uniq(values: string[]) {
-  return [...new Set(values)];
+  return values.filter((value, index) => values.indexOf(value) === index);
 }
 
 function makeFs(): Record<string, FSNode> {
