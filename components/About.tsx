@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { site } from "@/data/site";
+import { playQuack } from "@/utils/sounds";
 import Reveal from "./Reveal";
 import SectionTag from "./SectionTag";
 
@@ -32,17 +33,14 @@ export default function About() {
       </div>
 
       {/* Floating Linux penguin — desktop only */}
-      <motion.div
-        className="pointer-events-none absolute bottom-6 right-[6%] hidden w-[100px] lg:block"
-        animate={{
-          y: [0, -14, 0],
-          rotate: [-2, 2, -2],
-        }}
-        transition={{
-          duration: 3.6,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+      <motion.button
+        type="button"
+        aria-label="Quack!"
+        onClick={playQuack}
+        className="absolute bottom-6 right-[6%] hidden w-[100px] cursor-pointer lg:block"
+        animate={{ y: [0, -14, 0], rotate: [-2, 2, -2] }}
+        transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+        whileTap={{ scale: 0.88 }}
       >
         <Image
           src="/image/linux.png"
@@ -52,7 +50,7 @@ export default function About() {
           className="h-auto w-full object-contain"
           priority={false}
         />
-      </motion.div>
+      </motion.button>
     </section>
   );
 }

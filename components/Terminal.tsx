@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, KeyboardEvent } from "react";
+import { playKeyClick } from "@/utils/sounds";
 import { site } from "@/data/site";
 
 // ---------------------------------------------------------------------------
@@ -237,6 +238,7 @@ export default function Terminal() {
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    playKeyClick();
     if (e.key === "Enter") { submit(); return; }
     if (e.key === "ArrowUp") {
       e.preventDefault();
