@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1.7
+
 # ---- Base image ----
 FROM node:20-alpine AS base
 
@@ -7,7 +9,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json* ./
 # Uses the lockfile when present (reproducible), falls back to install otherwise.
-RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
+RUN --mount=type=cache,target=/root/.npm \
+  if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
 # ---- Build ----
 FROM base AS builder
