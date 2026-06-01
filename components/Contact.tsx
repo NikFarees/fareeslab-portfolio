@@ -104,6 +104,8 @@ function FunWidget() {
     "How about i help you.",
   ] as const;
   const promptTitle = promptByNoClicks[Math.min(noClicks, promptByNoClicks.length - 1)];
+  const promptSubtitle =
+    noClicks === 1 || noClicks === 2 ? "Please dont click no..." : "Be honest.";
 
   const escape = useCallback(() => {
     if (noGone) return;
@@ -152,7 +154,7 @@ function FunWidget() {
       {/* Header */}
       <div className="px-6 pt-6 pb-5">
         <p className="text-[18px] font-semibold tracking-[-0.01em]">{promptTitle}</p>
-        <p className="mt-1 text-[14px] text-ink-soft">Be honest.</p>
+        <p className="mt-1 text-[14px] text-ink-soft">{promptSubtitle}</p>
       </div>
 
       {/* Arena — No button runs around in here */}
