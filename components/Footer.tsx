@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="border-t border-line">
       <div className="wrap flex flex-wrap items-center justify-between gap-4 py-[30px]">
         <span className="font-mono text-[12.5px] text-ink-soft">
-          © 2026 {site.name}. Built with Next.js.
+          © 2026 {site.name}. All rights reserved.
         </span>
         <div className="flex gap-5">
           <a

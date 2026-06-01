@@ -187,11 +187,16 @@ type Row = { label: string; value: string; href: string; external?: boolean };
 
 export default function Contact() {
   const c = site.contact;
+  const whatsappPhone = c.phone.replace(/\D/g, "");
+  const whatsappMessage = encodeURIComponent(
+    "Hi Nik, I came across your portfolio. Are you available for a quick chat?"
+  );
+  const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
   const rows: Row[] = [
     { label: "Email", value: c.email, href: `mailto:${c.email}` },
     { label: "GitHub", value: c.githubLabel, href: c.github, external: true },
     { label: "LinkedIn", value: c.linkedinLabel, href: c.linkedin, external: true },
-    { label: "Phone", value: c.phoneLabel, href: `tel:${c.phone}` },
+    { label: "Phone", value: c.phoneLabel, href: whatsappUrl, external: true },
   ];
 
   return (
