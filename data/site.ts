@@ -51,6 +51,49 @@ export const site = {
     },
   ],
 
+  education: [
+    {
+      degree: "Bachelor of IT (Hons) in Software Engineering",
+      institution: "Universiti Kuala Lumpur (MIIT)",
+      period: "Sep 2022 – Feb 2026",
+      result: "CGPA 3.81",
+    },
+    {
+      degree: "Foundation in Computer Technology",
+      institution: "Universiti Kuala Lumpur (MIIT)",
+      period: "Aug 2021 – Aug 2022",
+      result: "CGPA 3.93",
+    },
+  ],
+
+  certifications: [
+    { name: "Google Project Management", issuer: "Coursera" },
+    { name: "Azure AI Fundamentals", issuer: "Microsoft Certified" },
+    { name: "CompTIA Cloud+", issuer: "CompTIA" },
+    { name: "IT Essentials", issuer: "Cisco" },
+    { name: "Top Coders 2024: Python Programming", issuer: "Competition" },
+    { name: "SwiftUI / iOS", issuer: "Certification" },
+  ],
+
+  // Shown together under the "Achievements" tab — two labelled groups.
+  awards: [
+    { title: "Dean's List Award", detail: "Semesters 1–6" },
+    { title: "Best Student Award", detail: "Foundation in Information Technology" },
+    { title: "GreenCity AR Competition — Silver Award", detail: "Augmented Reality green-city prototype" },
+    // Trimmed to keep the portfolio tech-focused. Uncomment to show:
+    // { title: "Best Student Award", detail: "Kursus Kejurulatihan Silat" },
+    // { title: "Black Belt Taekwondo · Red Belt Silat", detail: "Martial arts achievements" },
+  ],
+
+  activities: [
+    { title: "MARA Mentorship Program", detail: "Networking initiative with CEOs and senior executives" },
+    { title: "Innovation TVET Competition", detail: "Creative problem-solving in tech innovation" },
+    { title: "Debate Bootcamp", detail: "Public speaking and critical thinking" },
+    // Trimmed (entrepreneurship-leaning). Uncomment to show:
+    // { title: "Online Business Challenge", detail: "Developed and presented an online business model" },
+    // { title: "Program Usahawan Peranti SPACE", detail: "Entrepreneurship development program" },
+  ],
+
   contact: {
     email: "nfarees.faizal@gmail.com",
     github: "https://github.com/NikFarees",
@@ -65,5 +108,5 @@ export const site = {
 export const navLinks = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#experience" },
+  { label: "Background", href: "#background" },
 ] as const;
