@@ -27,22 +27,27 @@ export const site = {
   aboutLead:
     "A backend-leaning engineer who ships maintainable, production-ready software.",
 
-  // Experience highlights (kept short + realistic).
   experience: [
     {
-      title: "Backend Application Development",
+      title: "Software Developer",
+      company: "Latitude Innovation Sdn. Bhd.",
+      period: "Mar 2026 – Present",
       detail:
-        "Designing APIs, data models, and business logic for maintainable server-side systems with Laravel.",
+        "Built and shipped backend features across 6+ production systems using Laravel, Filament, Docker, and MySQL. Configured GitHub Actions CI/CD pipelines across 3+ repositories, cutting manual deployment steps to zero.",
     },
     {
-      title: "DevOps & Deployment",
+      title: "Web Developer (Intern)",
+      company: "Latitude Innovation Sdn. Bhd.",
+      period: "Sep 2025 – Feb 2026",
       detail:
-        "Containerized, VPS-ready deployments with Docker and reproducible, automated workflows.",
+        "Engineered the real-time auction backend supporting 100+ concurrent users, reducing post-launch issues by 30%. Configured DNS, server environments, and SMTP for 10+ client websites.",
     },
     {
-      title: "Admin & Operational Systems",
+      title: "Lecturer Assistant",
+      company: "Universiti Kuala Lumpur (MIIT)",
+      period: "Oct 2023 – Mar 2024",
       detail:
-        "Internal dashboards and admin panels — built with Filament — that keep day-to-day operations running.",
+        "Supported weekly lectures and labs for 50+ students, providing 1-on-1 debugging and programming guidance. Prepared lab exercises and graded assignments across 6 months.",
     },
   ],
 
