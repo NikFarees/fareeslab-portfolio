@@ -34,18 +34,17 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`sticky top-0 z-40 border-b transition-colors duration-300 ${
-          scrolled
+        className={`sticky top-0 z-40 border-b transition-colors duration-300 ${scrolled
             ? "border-line bg-paper/70 backdrop-blur-xl backdrop-saturate-150"
             : "border-transparent"
-        }`}
+          }`}
       >
         <div className="wrap flex h-16 items-center">
           {/* Logo */}
           <Link
             href="/#top"
             onClick={close}
-            className="flex items-center gap-2.5 text-[17px] font-semibold tracking-tight"
+            className="flex items-center gap-2.5 text-[20px] font-semibold tracking-tight"
           >
             <span className="h-2.5 w-2.5 rounded-full bg-accent" />
             {site.name}
@@ -57,7 +56,7 @@ export default function Navbar() {
               <Link
                 key={l.href}
                 href={`/${l.href}`}
-                className="text-sm text-ink-soft transition-colors hover:text-ink"
+                className="text-[17px] text-ink-soft transition-colors hover:text-ink"
               >
                 {l.label}
               </Link>
