@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 import Badge from "./Badge";
@@ -24,18 +25,35 @@ export default function ProjectCard({ project }: { project: Project }) {
       href={`/projects/${project.slug}`}
       className="group flex flex-col rounded-[20px] border border-line bg-surface p-[22px] transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-card"
     >
-      {/* Thumbnail placeholder — swap for a real <Image> when available. */}
-      <div className="relative mb-[18px] grid h-[158px] place-items-center rounded-[13px] border border-line bg-gradient-to-br from-[#f6f1ea] to-[#efe9df] font-mono text-[11.5px] text-[#a59e8e]">
+      {/* Thumbnail */}
+      <div className="relative mb-[18px] h-[158px] overflow-hidden rounded-[13px] border border-line bg-gradient-to-br from-[#f6f1ea] to-[#efe9df]">
+        {project.images?.main ? (
+          <Image
+            src={project.images.main}
+            alt={`${project.title} preview`}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 400px"
+          />
+        ) : (
+          <span className="absolute inset-0 grid place-items-center font-mono text-[11.5px] text-[#a59e8e]">
+            project preview
+          </span>
+        )}
         <span className="absolute right-3 top-3">
           <VisibilityTag visibility={project.visibility} />
         </span>
-        project preview
       </div>
 
-      <h3 className="mb-2 text-[22px] font-semibold tracking-[-0.02em]">
+      <h3 className="text-[22px] font-semibold tracking-[-0.02em]">
         {project.title}
       </h3>
-      <p className="mb-[18px] text-[14.5px] leading-[1.55] text-ink-soft">
+      {project.subtitle && (
+        <p className="mb-1 mt-0.5 font-mono text-[11.5px] text-ink-soft">
+          {project.subtitle}
+        </p>
+      )}
+      <p className="mb-[18px] mt-2 text-[14.5px] leading-[1.55] text-ink-soft">
         {project.description}
       </p>
 

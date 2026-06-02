@@ -47,7 +47,7 @@ export default function Navbar() {
             className="flex items-center gap-2.5 text-[20px] font-semibold tracking-tight"
           >
             <span className="h-2.5 w-2.5 rounded-full bg-accent" />
-            {site.name}
+            <span>Farees<span className="text-accent">Lab</span></span>
           </Link>
 
           {/* Desktop nav */}

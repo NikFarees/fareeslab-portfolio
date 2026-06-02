@@ -10,11 +10,14 @@ export type Project = {
   category: ProjectCategory;
   title: string;
   description: string; // short, shown on the card
+  subtitle?: string; // optional one-liner shown under the title on card + detail page
   overview: string; // longer, shown on the detail page
   role: string;
   contribution: string[]; // bullet points on the detail page
   stack: string[];
   visibility: Visibility;
+  // Place images in public/image/projects/<slug>/. main is shown on the card and at top of detail page.
+  images?: { main: string; gallery?: string[] };
   // Only set links for public projects. Private projects omit them entirely.
   links?: { github?: string; live?: string };
 };
@@ -138,7 +141,8 @@ export const projects: Project[] = [
   {
     slug: "fareeslab-portfolio",
     category: "Personal Project",
-    title: "fareeslab.dev — Developer Portfolio",
+    title: "FareesLab",
+    subtitle: "Developer Portfolio",
     description:
       "A developer portfolio with an interactive browser terminal, simulated filesystem, and custom UI interactions.",
     overview:
@@ -162,6 +166,7 @@ export const projects: Project[] = [
     slug: "pennywise",
     category: "Personal Project",
     title: "PennyWise",
+    subtitle: "Personal Finance Tracker",
     description:
       "A personal daily finance tracker — log income, recurring bills, expenses, debts, and investments with a running daily balance and an AI assistant.",
     overview:

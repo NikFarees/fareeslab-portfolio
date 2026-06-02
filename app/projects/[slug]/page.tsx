@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects, getProject } from "@/data/projects";
@@ -55,11 +56,18 @@ export default function ProjectDetail({
           </p>
 
           <div className="mt-2 flex flex-wrap items-center gap-4">
-            <h1 className="text-[clamp(40px,6vw,64px)] font-semibold tracking-[-0.035em]">
-              {project.title}
-            </h1>
+            <div>
+              <h1 className="text-[clamp(40px,6vw,64px)] font-semibold tracking-[-0.035em]">
+                {project.title}
+              </h1>
+              {project.subtitle && (
+                <p className="mt-1 font-mono text-[13px] text-ink-soft">
+                  {project.subtitle}
+                </p>
+              )}
+            </div>
             <span
-              className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[11px] ${
+              className={`inline-flex h-fit items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[11px] ${
                 isPrivate
                   ? "bg-accent-wash text-[#a9542f]"
                   : "bg-[#eef5ef] text-[#3c7d54]"
@@ -135,10 +143,39 @@ export default function ProjectDetail({
               </ul>
             </section>
 
-            {/* Media placeholder — swap for real screenshots / diagrams. */}
-            <div className="grid h-[220px] place-items-center rounded-[16px] border border-line bg-gradient-to-br from-[#f6f1ea] to-[#efe9df] font-mono text-[12px] text-[#a59e8e]">
-              screens / architecture diagram
-            </div>
+            {/* Images */}
+            {project.images && (
+              <div className="flex flex-col gap-4">
+                <div className="relative h-[320px] w-full overflow-hidden rounded-[16px] border border-line">
+                  <Image
+                    src={project.images.main}
+                    alt={`${project.title} main screenshot`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 760px"
+                    priority
+                  />
+                </div>
+                {project.images.gallery && project.images.gallery.length > 0 && (
+                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                    {project.images.gallery.map((src) => (
+                      <div
+                        key={src}
+                        className="relative aspect-video overflow-hidden rounded-[12px] border border-line"
+                      >
+                        <Image
+                          src={src}
+                          alt={`${project.title} screenshot`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 50vw, 240px"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </Reveal>
 
           {/* Meta sidebar */}
