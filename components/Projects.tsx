@@ -45,7 +45,7 @@ export default function Projects({ mainImageMap = {} }: { mainImageMap?: Record<
         </Reveal>
 
         <Reveal>
-          <div className="mb-7 flex flex-wrap items-center justify-between gap-3">
+          <div className="mb-7 flex flex-wrap items-center justify-center gap-3 lg:justify-between">
             {/* Category tabs */}
             <div className="inline-flex gap-1 rounded-xl bg-[#f0ede4] p-1">
               {TABS.map((tab) => (

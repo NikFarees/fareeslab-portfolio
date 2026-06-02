@@ -22,23 +22,25 @@ export default function Background() {
         </Reveal>
 
         <Reveal>
-          {/* Scrolls horizontally on narrow screens so all tabs stay reachable. */}
-          <div className="mb-7 -mx-7 overflow-x-auto px-7 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="inline-flex gap-1 rounded-xl bg-[#f0ede4] p-1">
-              {TABS.map((tab) => (
-                <button
-                  key={tab}
-                  type="button"
-                  onClick={() => setActive(tab)}
-                  className={`whitespace-nowrap rounded-[9px] px-[18px] py-2 text-sm font-medium transition-all ${
-                    active === tab
-                      ? "bg-surface text-ink shadow-sm"
-                      : "text-ink-soft hover:text-ink"
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
+          {/* Keeps the page fixed while the tabs scroll inside their own track. */}
+          <div className="mb-7 min-w-0 max-w-full overflow-hidden">
+            <div className="w-full min-w-0 overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div className="inline-flex min-w-max gap-1 rounded-xl bg-[#f0ede4] p-1">
+                {TABS.map((tab) => (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => setActive(tab)}
+                    className={`whitespace-nowrap rounded-[9px] px-[18px] py-2 text-sm font-medium transition-all ${
+                      active === tab
+                        ? "bg-surface text-ink shadow-sm"
+                        : "text-ink-soft hover:text-ink"
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </Reveal>
