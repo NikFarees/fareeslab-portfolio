@@ -40,6 +40,13 @@ export default function ProjectCard({ project, mainImage }: { project: Project; 
             project preview
           </span>
         )}
+        {project.visibility === "Private" && (mainImage ?? project.images?.main) && (
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="rounded-full bg-black/50 px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.12em] text-white/80 backdrop-blur-sm">
+              Generated image
+            </span>
+          </span>
+        )}
         <span className="absolute right-3 top-3">
           <VisibilityTag visibility={project.visibility} />
         </span>

@@ -155,6 +155,7 @@ export default function ProjectDetail({
                 url={project.links?.live
                   ? project.links.live.replace(/^https?:\/\//, "")
                   : project.slug}
+                isGenerated={isPrivate}
               />
             )}
           </Reveal>

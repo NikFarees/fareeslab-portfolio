@@ -9,9 +9,10 @@ type Props = {
   images: string[];
   alt: string;
   url?: string;
+  isGenerated?: boolean;
 };
 
-export default function ImageCarousel({ images, alt, url = "fareeslab.dev" }: Props) {
+export default function ImageCarousel({ images, alt, url = "fareeslab.dev", isGenerated = false }: Props) {
   const [index, setIndex] = useState(0);
   const [lightbox, setLightbox] = useState(false);
   const [windowState, setWindowState] = useState<WindowState>("open");
@@ -131,6 +132,14 @@ export default function ImageCarousel({ images, alt, url = "fareeslab.dev" }: Pr
               <span className="absolute left-3 top-3 z-20 flex items-center gap-1.5 rounded-full bg-paper/80 px-2.5 py-1 font-mono text-[11px] text-ink backdrop-blur-sm transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
                 ⤢ expand
               </span>
+
+              {isGenerated && (
+                <span className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                  <span className="rounded-full bg-black/50 px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.12em] text-white/80 backdrop-blur-sm">
+                    Generated image
+                  </span>
+                </span>
+              )}
 
               {images.length > 1 && (
                 <>
@@ -260,6 +269,13 @@ export default function ImageCarousel({ images, alt, url = "fareeslab.dev" }: Pr
                 className="h-auto max-h-[80vh] w-full rounded-[10px] object-contain"
                 priority
               />
+              {isGenerated && (
+                <span className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <span className="rounded-full bg-black/50 px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.12em] text-white/80 backdrop-blur-sm">
+                    Generated image
+                  </span>
+                </span>
+              )}
             </div>
 
             {/* Prev / Next — below image on mobile, overlaid on desktop */}
