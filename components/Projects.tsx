@@ -15,7 +15,7 @@ const TAB_LABEL: Record<ProjectCategory, string> = {
 const DESKTOP_PER_PAGE = 3; // 3 cols × 1 row
 const MOBILE_PER_PAGE = 1; // 1 col × 1 row
 
-export default function Projects() {
+export default function Projects({ mainImageMap = {} }: { mainImageMap?: Record<string, string> }) {
   const [active, setActive] = useState<ProjectCategory>("Client Project");
   const [page, setPage] = useState(1);
 
@@ -77,14 +77,14 @@ export default function Projects() {
           className="hidden gap-[22px] lg:grid lg:grid-cols-3"
         >
           {desktopItems.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
+            <ProjectCard key={p.slug} project={p} mainImage={mainImageMap[p.slug]} />
           ))}
         </Reveal>
 
         {/* Mobile grid */}
         <Reveal key={`mobile-${active}-${mobilePage}`} className="grid gap-[22px] lg:hidden">
           {mobileItems.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
+            <ProjectCard key={p.slug} project={p} mainImage={mainImageMap[p.slug]} />
           ))}
         </Reveal>
 

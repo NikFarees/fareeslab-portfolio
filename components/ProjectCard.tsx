@@ -17,7 +17,7 @@ function VisibilityTag({ visibility }: { visibility: Project["visibility"] }) {
 }
 
 /** Project card. Links to the dynamic detail page at /projects/[slug]. */
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({ project, mainImage }: { project: Project; mainImage?: string }) {
   const hasLinks = Boolean(project.links?.github || project.links?.live);
 
   return (
@@ -27,9 +27,9 @@ export default function ProjectCard({ project }: { project: Project }) {
     >
       {/* Thumbnail */}
       <div className="relative mb-[18px] h-[158px] overflow-hidden rounded-[13px] border border-line bg-gradient-to-br from-[#f6f1ea] to-[#efe9df]">
-        {project.images?.main ? (
+        {(mainImage ?? project.images?.main) ? (
           <Image
-            src={project.images.main}
+            src={(mainImage ?? project.images?.main)!}
             alt={`${project.title} preview`}
             fill
             className="object-cover"

@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects, getProject } from "@/data/projects";
-import { site } from "@/data/site";
+import { resolveProjectImages } from "@/lib/project-images";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import Badge from "@/components/Badge";
+import ImageCarousel from "@/components/ImageCarousel";
 
 // Pre-render a static page for every project at build time.
 export function generateStaticParams() {
@@ -34,6 +34,11 @@ export default function ProjectDetail({
 }) {
   const project = getProject(params.slug);
   if (!project) notFound();
+
+  const resolved = resolveProjectImages(params.slug);
+  const allImages = resolved
+    ? [resolved.main, ...resolved.gallery]
+    : [];
 
   const isPrivate = project.visibility === "Private";
   const hasLinks = Boolean(project.links?.github || project.links?.live);
@@ -116,7 +121,7 @@ export default function ProjectDetail({
         </Reveal>
 
         {/* Body */}
-        <div className="mt-12 grid items-start gap-10 md:grid-cols-[1fr_300px]">
+        <div className="mt-12 grid items-start gap-10 lg:grid-cols-[1fr_300px]">
           <Reveal className="flex flex-col gap-8">
             <section>
               <h2 className="mb-3.5 text-[23px] font-semibold tracking-[-0.01em]">
@@ -143,38 +148,14 @@ export default function ProjectDetail({
               </ul>
             </section>
 
-            {/* Images */}
-            {project.images && (
-              <div className="flex flex-col gap-4">
-                <div className="relative h-[320px] w-full overflow-hidden rounded-[16px] border border-line">
-                  <Image
-                    src={project.images.main}
-                    alt={`${project.title} main screenshot`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 760px"
-                    priority
-                  />
-                </div>
-                {project.images.gallery && project.images.gallery.length > 0 && (
-                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                    {project.images.gallery.map((src) => (
-                      <div
-                        key={src}
-                        className="relative aspect-video overflow-hidden rounded-[12px] border border-line"
-                      >
-                        <Image
-                          src={src}
-                          alt={`${project.title} screenshot`}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 50vw, 240px"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+            {allImages.length > 0 && (
+              <ImageCarousel
+                images={allImages}
+                alt={project.title}
+                url={project.links?.live
+                  ? project.links.live.replace(/^https?:\/\//, "")
+                  : project.slug}
+              />
             )}
           </Reveal>
 
