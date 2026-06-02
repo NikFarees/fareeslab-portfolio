@@ -114,7 +114,7 @@ export default function ProjectDetail({
           ) : (
             <div className="mt-6 flex max-w-[560px] items-center gap-2.5 rounded-[12px] border border-[#e0c4a6] bg-accent-wash px-4 py-3.5 text-[13.5px] text-[#8a5631]">
               {isPrivate
-                ? "This is a private client project — source code and live link are not publicly available."
+                ? "This is a private client project. Source code and live link are not publicly available."
                 : "Links for this project will be added soon."}
             </div>
           )}

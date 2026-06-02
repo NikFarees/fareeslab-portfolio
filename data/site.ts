@@ -8,7 +8,7 @@ export const site = {
   url: "https://fareeslab.dev",
 
   heroCopy:
-    "Building reliable backend systems, scalable web applications, and deployment-ready digital products with Laravel, Next.js, Docker, and modern engineering workflows.",
+    "I build backend systems and web apps that hold up in production. Mostly Laravel and Next.js, shipped with Docker and a CI/CD pipeline behind them.",
 
   // Small badges shown in the hero.
   badges: ["Laravel", "Next.js", "Docker", "MySQL", "Filament"],
@@ -22,10 +22,10 @@ export const site = {
   ],
 
   about:
-    "Nik Farees is a Software Engineer focused on building practical, maintainable, and deployment-ready web applications. His work combines backend engineering, modern frontend frameworks, database-driven systems, Docker-based workflows, and production-focused problem solving.",
+    "Nik Farees is a Software Engineer who builds practical, maintainable web applications and gets them into production. Most of his work is backend engineering against database-driven systems, with enough frontend and Docker-based deployment to take a project from an empty repo to a running service.",
 
   aboutLead:
-    "A backend-leaning engineer who ships maintainable, production-ready software.",
+    "A backend-leaning engineer who ships maintainable software and keeps it running in production.",
 
   experience: [
     {
@@ -33,21 +33,21 @@ export const site = {
       company: "Latitude Innovation Sdn. Bhd.",
       period: "Mar 2026 – Present",
       detail:
-        "Built and shipped backend features across 6+ production systems using Laravel, Filament, Docker, and MySQL. Configured GitHub Actions CI/CD pipelines across 3+ repositories, cutting manual deployment steps to zero.",
+        "Built and shipped backend features across 6+ production systems with Laravel, Filament, Docker, and MySQL. Set up GitHub Actions CI/CD across 3+ repositories, which took manual deployment steps to zero.",
     },
     {
       title: "Web Developer (Intern)",
       company: "Latitude Innovation Sdn. Bhd.",
       period: "Sep 2025 – Feb 2026",
       detail:
-        "Engineered the real-time auction backend supporting 100+ concurrent users, reducing post-launch issues by 30%. Configured DNS, server environments, and SMTP for 10+ client websites.",
+        "Built the real-time auction backend that held up for 100+ concurrent users and cut post-launch issues by 30%. Configured DNS, server environments, and SMTP for 10+ client websites.",
     },
     {
       title: "Lecturer Assistant",
       company: "Universiti Kuala Lumpur (MIIT)",
       period: "Oct 2023 – Mar 2024",
       detail:
-        "Supported weekly lectures and labs for 50+ students, providing 1-on-1 debugging and programming guidance. Prepared lab exercises and graded assignments across 6 months.",
+        "Supported weekly lectures and labs for 50+ students with 1-on-1 debugging and programming help. Prepared lab exercises and graded assignments over 6 months.",
     },
   ],
 
@@ -86,9 +86,9 @@ export const site = {
   ],
 
   activities: [
-    { title: "MARA Mentorship Program", detail: "Networking initiative with CEOs and senior executives" },
-    { title: "Innovation TVET Competition", detail: "Creative problem-solving in tech innovation" },
-    { title: "Debate Bootcamp", detail: "Public speaking and critical thinking" },
+    { title: "MARA Mentorship Program", detail: "Direct access to CEOs and senior executives across industries" },
+    { title: "Innovation TVET Competition", detail: "Built and pitched a tech solution to a real-world problem" },
+    { title: "Debate Bootcamp", detail: "Structured argumentation and public speaking practice" },
     // Trimmed (entrepreneurship-leaning). Uncomment to show:
     // { title: "Online Business Challenge", detail: "Developed and presented an online business model" },
     // { title: "Program Usahawan Peranti SPACE", detail: "Entrepreneurship development program" },

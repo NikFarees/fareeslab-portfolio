@@ -78,7 +78,7 @@ function Toast({ visible }: { visible: boolean }) {
         visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
       }`}
     >
-      Glad you like it — you made my day!
+      Glad you like it. You made my day!
     </div>
   );
 }
@@ -101,7 +101,7 @@ function FunWidget() {
     "Do you like my website?",
     "You sure you want to say no?",
     "Are you really really sure you dont like my website?",
-    "How about i help you.",
+    "How about I help you.",
   ] as const;
   const promptTitle = promptByNoClicks[Math.min(noClicks, promptByNoClicks.length - 1)];
   const promptSubtitle =
@@ -143,7 +143,7 @@ function FunWidget() {
         {toast && <Toast visible={toastVisible} />}
         <div className="flex w-[340px] flex-col items-center rounded-[18px] border border-line bg-surface px-8 py-10 text-center shadow-card">
           <p className="mt-3 text-[20px] font-semibold">I knew you&rsquo;d click yes.</p>
-          <p className="mt-2 text-[15px] text-ink-soft">Thank you for visiting — it genuinely means a lot. Hope it left a good impression!</p>
+          <p className="mt-2 text-[15px] text-ink-soft">Thanks for visiting. Hope it was worth your time.</p>
         </div>
       </>
     );
@@ -227,7 +227,7 @@ export default function Contact() {
             </Reveal>
             <Reveal delay={0.06}>
               <p className="mb-9 text-[18px] text-ink-soft">
-                Open to roles and freelance work — reach out through any channel below.
+                Open to roles and freelance work. Reach out through any channel below.
               </p>
             </Reveal>
 
