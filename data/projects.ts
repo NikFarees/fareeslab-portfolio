@@ -136,6 +136,29 @@ export const projects: Project[] = [
     // No links — private client work.
   },
   {
+    slug: "fareeslab-portfolio",
+    category: "Personal Project",
+    title: "fareeslab.dev — Developer Portfolio",
+    description:
+      "A developer portfolio with an interactive browser terminal, simulated filesystem, and custom UI interactions.",
+    overview:
+      "A personal portfolio site built to be more than a static resume. The centrepiece is an interactive in-browser terminal with a simulated filesystem — visitors can navigate directories, run commands, and discover content through a CLI experience. The rest of the site pairs a minimal typographic design with Framer Motion scroll animations, a sound-wired keyboard, and a statically generated project detail system — all shipped through a self-hosted Docker container behind Cloudflare.",
+    role: "Full-Stack Developer",
+    contribution: [
+      "Built an interactive browser terminal with a simulated filesystem, command parser, and navigable directory tree.",
+      "Designed and implemented the full UI system — typographic hierarchy, Framer Motion reveal animations, and responsive layout from mobile to desktop.",
+      "Wired custom audio interactions: synthesised key-click sounds on terminal input and a quack on the Linux Tux easter egg.",
+      "Architected a data-driven project system where adding an entry to a single file generates both the homepage card and a static detail page.",
+      "Set up a self-hosted CI/CD pipeline: GitHub Actions builds and pushes a Docker image to GHCR, then SSHes into a VPS to restart the container, with Nginx + Cloudflare Origin Certificate handling TLS.",
+    ],
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Docker"],
+    visibility: "Public",
+    links: {
+      github: "https://github.com/NikFarees/fareeslab-portfolio",
+      live: "https://fareeslab.dev",
+    },
+  },
+  {
     slug: "pennywise",
     category: "Personal Project",
     title: "PennyWise",
