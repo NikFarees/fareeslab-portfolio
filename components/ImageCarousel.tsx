@@ -60,9 +60,9 @@ export default function ImageCarousel({ images, alt, url = "fareeslab.dev" }: Pr
 
   return (
     <>
-      <div className="flex flex-col gap-3">
+      <div className="flex min-w-0 max-w-full flex-col gap-3">
         {/* Browser chrome frame */}
-        <div className="overflow-hidden rounded-[14px] border border-[#d4cfc6] shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
+        <div className="min-w-0 overflow-hidden rounded-[14px] border border-[#d4cfc6] shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
 
           {/* Title bar */}
           <div className="flex items-center gap-2 border-b border-[#ddd8cf] bg-[#f0ece3] px-3 py-[10px] sm:gap-3 sm:px-4">
@@ -110,7 +110,7 @@ export default function ImageCarousel({ images, alt, url = "fareeslab.dev" }: Pr
 
           {/* Image area */}
           {windowState === "open" && (
-            <div className="group relative h-[220px] bg-[#f6f1ea] sm:h-[280px] md:h-[300px]">
+            <div className="group relative aspect-[3406/1690] w-full bg-[#f6f1ea]">
               <button
                 type="button"
                 onClick={() => setLightbox(true)}
@@ -122,7 +122,7 @@ export default function ImageCarousel({ images, alt, url = "fareeslab.dev" }: Pr
                 src={images[index]}
                 alt={`${alt} — image ${index + 1}`}
                 fill
-                className="object-cover transition-opacity duration-300"
+                className="object-contain transition-opacity duration-300"
                 sizes="(max-width: 768px) 100vw, 760px"
                 priority={index === 0}
               />
@@ -192,26 +192,28 @@ export default function ImageCarousel({ images, alt, url = "fareeslab.dev" }: Pr
 
         {/* Thumbnail strip */}
         {windowState === "open" && images.length > 1 && (
-          <div className="flex gap-2 overflow-x-auto pb-1">
-            {images.map((src, i) => (
-              <button
-                key={src}
-                type="button"
-                onClick={() => setIndex(i)}
-                aria-label={`View image ${i + 1}`}
-                className={`relative h-[56px] w-[84px] flex-none overflow-hidden rounded-[8px] border-2 transition-all sm:h-[60px] sm:w-[90px] ${
-                  i === index ? "border-accent" : "border-line-strong opacity-60 hover:opacity-100"
-                }`}
-              >
-                <Image
-                  src={src}
-                  alt={`${alt} thumbnail ${i + 1}`}
-                  fill
-                  className="object-cover"
-                  sizes="90px"
-                />
-              </button>
-            ))}
+          <div className="min-w-0 max-w-full overflow-hidden">
+            <div className="flex w-full min-w-0 gap-2 overflow-x-auto overscroll-x-contain pb-1">
+              {images.map((src, i) => (
+                <button
+                  key={src}
+                  type="button"
+                  onClick={() => setIndex(i)}
+                  aria-label={`View image ${i + 1}`}
+                  className={`relative aspect-[3406/1690] w-[84px] flex-none overflow-hidden rounded-[8px] border-2 transition-all sm:w-[90px] ${
+                    i === index ? "border-accent" : "border-line-strong opacity-60 hover:opacity-100"
+                  }`}
+                >
+                  <Image
+                    src={src}
+                    alt={`${alt} thumbnail ${i + 1}`}
+                    fill
+                    className="object-contain"
+                    sizes="90px"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>

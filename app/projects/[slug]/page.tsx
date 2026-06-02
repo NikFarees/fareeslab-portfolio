@@ -121,8 +121,8 @@ export default function ProjectDetail({
         </Reveal>
 
         {/* Body */}
-        <div className="mt-12 grid items-start gap-10 lg:grid-cols-[1fr_300px]">
-          <Reveal className="flex flex-col gap-8">
+        <div className="mt-12 grid min-w-0 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
+          <Reveal className="flex min-w-0 flex-col gap-8">
             <section>
               <h2 className="mb-3.5 text-[23px] font-semibold tracking-[-0.01em]">
                 Overview
@@ -161,7 +161,7 @@ export default function ProjectDetail({
 
           {/* Meta sidebar */}
           <Reveal delay={0.08}>
-            <aside className="sticky top-[84px] flex flex-col gap-4 rounded-[16px] border border-line bg-surface p-[22px]">
+            <aside className="sticky top-[84px] min-w-0 flex flex-col gap-4 rounded-[16px] border border-line bg-surface p-[22px]">
               <MetaRow label="Category" value={project.category} />
               <MetaRow label="Role" value={project.role} />
               <MetaRow label="Visibility" value={project.visibility} />
