@@ -99,7 +99,7 @@ export default function Projects({ mainImageMap = {} }: { mainImageMap?: Record<
   );
 }
 
-/** Prev / numbered / Next pagination control. Renders nothing for a single page. */
+/** First / prev / numbered / next / last pagination control. Renders nothing for a single page. */
 function Pager({
   page,
   total,
@@ -110,26 +110,46 @@ function Pager({
   onPage: (n: number) => void;
 }) {
   if (total <= 1) return null;
+
+  const buttonBase =
+    "flex h-8 min-w-8 items-center justify-center rounded-[9px] border text-[13px] font-medium transition-colors sm:h-9 sm:min-w-9 sm:rounded-[10px]";
+  const idleButton =
+    "border-line-strong bg-surface text-ink hover:border-[#d2cdc1]";
+  const disabledButton = "disabled:cursor-not-allowed disabled:opacity-40";
+
   return (
-    <div className="flex items-center gap-2">
+    <nav
+      aria-label="Project pagination"
+      className="flex max-w-full flex-wrap items-center justify-center gap-1.5 sm:gap-2"
+    >
+      <button
+        type="button"
+        onClick={() => onPage(1)}
+        disabled={page === 1}
+        aria-label="First page"
+        className={`${buttonBase} ${idleButton} ${disabledButton}`}
+      >
+        «
+      </button>
       <button
         type="button"
         onClick={() => onPage(Math.max(1, page - 1))}
         disabled={page === 1}
         aria-label="Previous page"
-        className="flex h-9 items-center rounded-[10px] border border-line-strong bg-surface px-3 text-[13px] font-medium text-ink transition-colors hover:border-[#d2cdc1] disabled:cursor-not-allowed disabled:opacity-40"
+        className={`${buttonBase} ${idleButton} ${disabledButton}`}
       >
-        ←
+        ‹
       </button>
       {Array.from({ length: total }, (_, i) => i + 1).map((n) => (
         <button
           key={n}
           type="button"
           onClick={() => onPage(n)}
-          className={`h-9 w-9 rounded-[10px] border text-[13px] font-medium transition-colors ${
+          aria-current={page === n ? "page" : undefined}
+          className={`${buttonBase} ${
             page === n
               ? "border-accent bg-accent text-white"
-              : "border-line-strong bg-surface text-ink hover:border-[#d2cdc1]"
+              : idleButton
           }`}
         >
           {n}
@@ -140,10 +160,19 @@ function Pager({
         onClick={() => onPage(Math.min(total, page + 1))}
         disabled={page === total}
         aria-label="Next page"
-        className="flex h-9 items-center rounded-[10px] border border-line-strong bg-surface px-3 text-[13px] font-medium text-ink transition-colors hover:border-[#d2cdc1] disabled:cursor-not-allowed disabled:opacity-40"
+        className={`${buttonBase} ${idleButton} ${disabledButton}`}
       >
-        →
+        ›
       </button>
-    </div>
+      <button
+        type="button"
+        onClick={() => onPage(total)}
+        disabled={page === total}
+        aria-label="Last page"
+        className={`${buttonBase} ${idleButton} ${disabledButton}`}
+      >
+        »
+      </button>
+    </nav>
   );
 }
