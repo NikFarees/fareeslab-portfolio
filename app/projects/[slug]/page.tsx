@@ -22,8 +22,21 @@ export function generateMetadata({
   const project = getProject(params.slug);
   if (!project) return { title: "Project not found" };
   return {
-    title: project.title,
-    description: project.overview,
+    title: project.subtitle
+      ? `${project.title} — ${project.subtitle}`
+      : project.title,
+    description: project.description,
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      type: "article",
+      url: `/projects/${project.slug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.description,
+    },
   };
 }
 
