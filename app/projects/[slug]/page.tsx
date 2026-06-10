@@ -5,7 +5,7 @@ import { projects, getProject } from "@/data/projects";
 import { resolveProjectImages } from "@/lib/project-images";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Reveal from "@/components/Reveal";
+import Reveal, { StaggerReveal, StaggerItem } from "@/components/Reveal";
 import Badge from "@/components/Badge";
 import ImageCarousel from "@/components/ImageCarousel";
 
@@ -149,16 +149,16 @@ export default function ProjectDetail({
               <h2 className="mb-3.5 text-[23px] font-semibold tracking-[-0.01em]">
                 Contribution summary
               </h2>
-              <ul className="flex flex-col gap-3">
+              <StaggerReveal as="ul" stagger={0.06} className="flex flex-col gap-3">
                 {project.contribution.map((c) => (
-                  <li key={c} className="flex items-start gap-2.5">
+                  <StaggerItem as="li" key={c} className="flex items-start gap-2.5">
                     <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-accent" />
                     <span className="text-[16px] leading-[1.6] text-ink-soft">
                       {c}
                     </span>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </StaggerReveal>
             </section>
 
             {allImages.length > 0 && (

@@ -23,7 +23,7 @@ export default function ProjectCard({ project, mainImage }: { project: Project; 
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group flex flex-col rounded-[20px] border border-line bg-surface p-[22px] transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-card"
+      className="group flex h-full flex-col rounded-[20px] border border-line bg-surface p-[22px] transition-all duration-300 hover:border-line-strong hover:shadow-card motion-safe:hover:-translate-y-1.5"
     >
       {/* Thumbnail */}
       <div className="relative mb-[18px] h-[158px] overflow-hidden rounded-[13px] border border-line bg-gradient-to-br from-[#f6f1ea] to-[#efe9df]">
@@ -32,7 +32,7 @@ export default function ProjectCard({ project, mainImage }: { project: Project; 
             src={(mainImage ?? project.images?.main)!}
             alt={`${project.title} preview`}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.04]"
             sizes="(max-width: 768px) 100vw, 400px"
           />
         ) : (

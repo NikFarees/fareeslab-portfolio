@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { projectsByCategory, type ProjectCategory } from "@/data/projects";
-import Reveal from "./Reveal";
+import Reveal, { StaggerReveal, StaggerItem } from "./Reveal";
 import SectionTag from "./SectionTag";
 import ProjectCard from "./ProjectCard";
 
@@ -72,21 +72,28 @@ export default function Projects({ mainImageMap = {} }: { mainImageMap?: Record<
         </Reveal>
 
         {/* Desktop grid — always 3 columns */}
-        <Reveal
+        <StaggerReveal
           key={`desktop-${active}-${desktopPage}`}
           className="hidden gap-[22px] lg:grid lg:grid-cols-3"
         >
           {desktopItems.map((p) => (
-            <ProjectCard key={p.slug} project={p} mainImage={mainImageMap[p.slug]} />
+            <StaggerItem key={p.slug} className="h-full">
+              <ProjectCard project={p} mainImage={mainImageMap[p.slug]} />
+            </StaggerItem>
           ))}
-        </Reveal>
+        </StaggerReveal>
 
         {/* Mobile grid */}
-        <Reveal key={`mobile-${active}-${mobilePage}`} className="grid gap-[22px] lg:hidden">
+        <StaggerReveal
+          key={`mobile-${active}-${mobilePage}`}
+          className="grid gap-[22px] lg:hidden"
+        >
           {mobileItems.map((p) => (
-            <ProjectCard key={p.slug} project={p} mainImage={mainImageMap[p.slug]} />
+            <StaggerItem key={p.slug} className="h-full">
+              <ProjectCard project={p} mainImage={mainImageMap[p.slug]} />
+            </StaggerItem>
           ))}
-        </Reveal>
+        </StaggerReveal>
 
         {/* Mobile pagination — stays at the bottom */}
         {totalMobilePages > 1 && (
