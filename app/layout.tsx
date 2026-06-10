@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
 import { DM_Sans, Fraunces } from "next/font/google";
 import { site } from "@/data/site";
-import Fireflies from "@/components/Fireflies";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -60,10 +59,7 @@ export default function RootLayout({
       lang="en"
       className={`${dmSans.variable} ${fraunces.variable} ${GeistMono.variable}`}
     >
-      <body className="font-sans">
-        <Fireflies />
-        {children}
-      </body>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }
