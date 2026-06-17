@@ -188,6 +188,27 @@ export const projects: Project[] = [
       live: "https://pennywise.fareeslab.dev",
     },
   },
+  {
+    slug: "driving-school-management-system",
+    category: "Personal Project",
+    title: "DriveFlow",
+    subtitle: "Driving School Management System",
+    description:
+      "My final-year project: a management system for a real driving school in Kelantan, built solo in plain PHP. It runs the whole student journey across three roles, from license booking and lesson scheduling to a four-stage driving test and payments.",
+    overview:
+      "DriveFlow is the management system I built solo as my final-year project for KMSE, a driving school in Pasir Mas, Kelantan. It replaces their old mix of the MyDIIMS portal and paper logbooks with one site for students, instructors, and admins. A student books a license and a lesson package, then moves through a four-stage test track (computer test, QTI, circuit, on-road) while attendance and payments are tracked against that enrollment. Instructors mark attendance, set their unavailable slots, and record test scores. Admins schedule lessons with conflict checks, issue licenses, and watch live KPIs on a Chart.js dashboard. It is plain PHP 8.2 with no framework: every page starts from a role-specific header that opens the session, connects the database, and enforces access before rendering, so each role only ever reaches its own screens.",
+    role: "Full-Stack Developer",
+    contribution: [
+      "Built the whole system solo in plain PHP 8.2 with no framework, where each page includes a role header that runs the session, opens the database, and enforces role-based access before anything renders.",
+      "Modelled the full student journey across three roles: license booking, lesson packages, a four-stage test progression (computer test, QTI, circuit, on-road), and payments tied to each enrollment.",
+      "Built the admin side: lesson scheduling with conflict detection, bulk rescheduling, test-session capacity, license issuance, and a Chart.js dashboard with live KPIs for revenue, attendance, and enrollment.",
+      "Designed the MariaDB schema around readable business IDs (e.g. ST001010125) instead of auto-increment integers, with a central users table extended by per-role student, instructor, and administrator tables.",
+      "Containerised the stack with Docker Compose and phpMyAdmin, plus a Python seed generator that produces around 100 students of realistic Kelantan demo data with linked lesson, test, and payment journeys.",
+    ],
+    stack: ["PHP", "MariaDB", "Bootstrap", "Chart.js", "Docker"],
+    visibility: "Private",
+    // No links — private repo, localhost only.
+  },
 ];
 
 export const getProject = (slug: string) =>
