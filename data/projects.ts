@@ -209,6 +209,30 @@ export const projects: Project[] = [
     visibility: "Private",
     // No links — private repo, localhost only.
   },
+  {
+    slug: "3d-portfolio",
+    category: "Personal Project",
+    title: "3D Portfolio",
+    subtitle: "Interactive 3D Room",
+    description:
+      "An isometric 3D room portfolio built with React Three Fiber. Every section is a clickable object in the room — the laptop opens projects, the picture opens the bio, the medals open achievements.",
+    overview:
+      "A portfolio reimagined as an isometric 3D room rendered with React Three Fiber. Instead of scrolling sections, visitors click objects in the scene: the framed picture opens an About Me modal, the laptop opens a projects gallery, the medals show achievements, the metal case and album cover work experience and education, and the coffee maker lists the tech stack. The room's lighting shifts through day, evening, and night phases based on the visitor's local time, and a wandering cat roams the scene and meows on click. Every object is swappable — it starts as a primitive placeholder and can be dropped for a real GLB model without touching scene code.",
+    role: "Frontend Developer",
+    contribution: [
+      "Built the isometric 3D room in React Three Fiber and drei, with GSAP driving camera transitions between focused objects.",
+      "Designed a time-of-day lighting system (day/evening/night) driven by the visitor's local clock, with a URL override for previewing any phase.",
+      "Built a swappable-model architecture: every object renders a primitive placeholder that can be swapped for a real GLB without touching scene logic.",
+      "Used Zustand to share state between the R3F canvas and the DOM overlays (modals, HUD) driving each interaction.",
+      "Kept all portfolio content in flat data files, separate from scene code, so bio, projects, experience, and stack are editable without touching 3D logic.",
+    ],
+    stack: ["React Three Fiber", "Three.js", "TypeScript", "Vite", "GSAP", "Zustand"],
+    visibility: "Public",
+    links: {
+      github: "https://github.com/NikFarees/3d-portfolio",
+      live: "https://3d-portfolio.fareeslab.dev",
+    },
+  },
 ];
 
 export const getProject = (slug: string) =>
